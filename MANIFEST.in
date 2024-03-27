@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include petropipe *.css
+recursive-include petropipe *.csv
+recursive-include petropipe *.html
+recursive-include petropipe *.ico
+recursive-include petropipe *.js
+recursive-include petropipe *.json
+recursive-include petropipe *.md
+recursive-include petropipe *.png
+recursive-include petropipe *.py
+recursive-include petropipe *.svg
+recursive-include petropipe *.txt
+recursive-exclude petropipe *.pyc
