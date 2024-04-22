@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 frappe.query_reports["Event Details"] = {
-	"filters": [
+	filters: [
 		{
 			fieldname: "company",
 			label: __("Company"),
