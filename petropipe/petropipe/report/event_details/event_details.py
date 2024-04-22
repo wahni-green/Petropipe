@@ -3,9 +3,8 @@
 
 import frappe
 from frappe import _
-from frappe.query_builder.functions import Count, Sum
-from frappe import _, scrub
-from frappe.utils import add_days, add_to_date, flt, getdate
+from frappe import _
+from frappe.utils import add_days, add_to_date, getdate
 from pypika.functions import Date
 
 from erpnext.accounts.utils import get_fiscal_year
