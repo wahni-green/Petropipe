@@ -35,7 +35,8 @@ def get_data(filters=None, months=None):
 	lead = frappe.qb.DocType("Lead")
 	query = (
 		frappe.qb.from_(lead)
-		.select( lead.name.as_("lead") )
+		.select(lead.name.as_("lead"), lead.lead_owner)
+		.where(lead.lead_owner.notnull())
 	)
 	if filters.from_date:
 		query = query.where(Date(lead.creation) >= filters.get("from_date"))
@@ -43,59 +44,60 @@ def get_data(filters=None, months=None):
 		query = query.where(Date(lead.creation) <= filters.get("to_date"))
 	if filters.company:
 		query = query.where(lead.company == filters.company)
-	if filters.lead:
-		query = query.where(lead.name == filters.lead)
+	if filters.lead_owner:
+		query = query.where(lead.lead_owner == filters.lead_owner)
 
-	data = query.run(as_dict=1)
-
-	if not data:
+	lead_details = query.run(as_dict=1)
+	if not lead_details:
 		return []
-	leads = [lead.lead for lead in data]
+	lead_map = frappe._dict()
+	for d in lead_details:
+		lead_map.setdefault(d.get("lead_owner"), []).append(d.lead)
 
 	# Getting all period date range 
 	periodic_daterange = get_period_date_ranges(filters)
 
-	# Getting all the lead introuduction email count
-	introduction_email_count = get_event_data(filters, "Introduction Email", months)
-
-	# Getting all the follow - up email count
-	followup_email_count = get_event_data(filters, "Follow-Up Email", months)
-
-	# Getting all the meeting count
-	meeting_count = get_event_data(filters, "Meeting", months)
-
-	# Getting all the quotation count
-	quotation_count = get_lead_quotation_count(leads, filters, months)
-
-	# Getting all the opportunity count
-	opportunity_count = get_lead_opportunity_count(leads, filters, months)
-
 	labels = [
 		"No of Introduction Email", "No of Follow-Up Email","No of Meetings",
-		"No of Opportunity", "No of Quotations"
+		"No of Opportunity", "No of Quotations", "No of Lead"
 	]
 
-	for row in data:
+	data = []
+	for lead_owner, leads in lead_map.items():
+		row = {"lead_owner": lead_owner, }
 		for label in labels:
 			for end_date in periodic_daterange:
 				period = get_period(end_date, filters, months)
 				field_name = frappe.scrub("{0} {1}".format(label, period))
 
-				if label == "No of Introduction Email":
-					row[field_name] = introduction_email_count.get(row.lead, {}).get(period, 0)
+				if label == "No of Lead":
+					row[field_name] = len(leads)
+				elif label == "No of Introduction Email":
+					row[field_name] = get_event_data(leads, lead_owner, filters, "Introduction Email", months).get(
+					lead_owner, {}).get(period, 0
+				)
 				elif label == "No of Follow-Up Email":
-					row[field_name] = followup_email_count.get(row.lead, {}).get(period, 0)
+					row[field_name] = get_event_data(leads, lead_owner, filters, "Follow-Up Email", months).get(
+					lead_owner, {}).get(period, 0
+				)
 				elif label == "No of Meetings":
-					row[field_name] = meeting_count.get(row.lead, {}).get(period, 0)
+					row[field_name] = get_event_data(leads, lead_owner, filters, "Meeting", months).get(
+					lead_owner, {}).get(period, 0
+				)
 				elif label == "No of Opportunity":
-					row[field_name] = opportunity_count.get(row.lead, {}).get(period, 0)
+					row[field_name] = get_lead_opportunity_count(
+						leads, lead_owner, filters, months
+				).get(lead_owner, {}).get(period, 0)
 				elif label == "No of Quotations":
-					row[field_name] = quotation_count.get(row.lead, {}).get(period, 0)
+					row[field_name] = get_lead_quotation_count(
+						leads, lead_owner, filters, months
+					).get(lead_owner, {}).get(period, 0)
+		data.append(row)
 
 	return data
 
 
-def get_lead_quotation_count(leads, filters, months):
+def get_lead_quotation_count(leads, lead_owner, filters, months):
 	quotation = frappe.qb.DocType("Quotation")
 	quotation_data = (
 		frappe.qb.from_(quotation)
@@ -103,8 +105,7 @@ def get_lead_quotation_count(leads, filters, months):
 			quotation.party_name, quotation.name, quotation.transaction_date
 		)
 		.where(
-			(quotation.docstatus == 1)
-			&(quotation.quotation_to == "Lead")
+			(quotation.quotation_to == "Lead")
 			& (quotation.party_name.isin(leads))
 		)
 		.run(as_dict=1)
@@ -113,13 +114,13 @@ def get_lead_quotation_count(leads, filters, months):
 	quotation_entries = {}
 	for q_data in quotation_data:
 		period = get_period(q_data.transaction_date, filters , months)
-		quotation_entries.setdefault(q_data.party_name, frappe._dict()).setdefault(period, 0.0)
-		quotation_entries[q_data.party_name][period] += 1
+		quotation_entries.setdefault(lead_owner, frappe._dict()).setdefault(period, 0.0)
+		quotation_entries[lead_owner][period] += 1
 
 	return quotation_entries
 
 
-def get_lead_opportunity_count(leads, filters, months):
+def get_lead_opportunity_count(leads, lead_owner, filters, months):
 	opportunity = frappe.qb.DocType("Opportunity")
 	opportunity_data = (
 		frappe.qb.from_(opportunity)
@@ -135,13 +136,13 @@ def get_lead_opportunity_count(leads, filters, months):
 	opportunity_enteries = {}
 	for o_data in opportunity_data:
 		period = get_period(getdate(o_data.creation), filters , months)
-		opportunity_enteries.setdefault(o_data.party_name, frappe._dict()).setdefault(period, 0.0)
-		opportunity_enteries[o_data.party_name][period] += 1		
+		opportunity_enteries.setdefault(lead_owner, frappe._dict()).setdefault(period, 0.0)
+		opportunity_enteries[lead_owner][period] += 1		
 
 	return opportunity_enteries
 
 
-def get_event_data(filters, type, months):
+def get_event_data(leads, lead_owner, filters, type, months):
 	event = frappe.qb.DocType("Event")
 	event_p = frappe.qb.DocType("Event Participants")
 
@@ -152,15 +153,18 @@ def get_event_data(filters, type, months):
 			event_p.reference_docname.as_('lead'), event.event_category, event.starts_on
 		)
 		.where(
-			(event.status == "Open") & (event_p.reference_doctype == "Lead") & (event.event_category == type)
+			(event.status == "Open") 
+			& (event_p.reference_doctype == "Lead")
+			& (event.event_category == type)
+			& (event_p.reference_docname.isin(leads))
 		)
 		.run(as_dict=1)
 	)
 	event_entries = {}
 	for e_data in event_data:
 		period = get_period(getdate(e_data.starts_on), filters , months)
-		event_entries.setdefault(e_data.lead, frappe._dict()).setdefault(period, 0.0)
-		event_entries[e_data.lead][period] += 1
+		event_entries.setdefault(lead_owner, frappe._dict()).setdefault(period, 0.0)
+		event_entries[lead_owner][period] += 1
 
 	return  event_entries
 
@@ -216,17 +220,17 @@ def get_period_date_ranges(filters):
 def get_columns(filters=None, period_range=None, months=None):
 	columns = [
 		{
-			"label": _("Lead"),
-			"fieldname": "lead",
+			"label": _("Lead Owner"),
+			"fieldname": "lead_owner",
 			"fieldtype": "Link",
-			"options": "Lead",
+			"options": "User",
 			"width": 200
 		}
 	]
 	labels = [
-			_("No of Introduction Email"), _("No of Follow-Up Email"), _("No of Meetings"),
-			_("No of Opportunity"), _("No of Quotations"),
-		]
+		_("No of Lead"), _("No of Opportunity"), _("No of Quotations"),
+		_("No of Introduction Email"), _("No of Follow-Up Email"), _("No of Meetings"),
+	]
 
 	for end_date in period_range:
 			period = get_period(end_date, filters, months)
