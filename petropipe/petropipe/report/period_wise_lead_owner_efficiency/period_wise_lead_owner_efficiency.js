@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
-frappe.query_reports["Event Insight"] = {
+frappe.query_reports["Period-Wise Lead Owner Efficiency"] = {
 	"filters": [
 		{
 			fieldname: "company",
@@ -12,11 +12,10 @@ frappe.query_reports["Event Insight"] = {
 			default: frappe.defaults.get_user_default("Company"),
 		},
 		{
-			fieldname: "lead",
-			label: __("Lead"),
+			fieldname: "lead_owner",
+			label: __("Lead Owner"),
 			fieldtype: "Link",
-			options: "Lead",
-			reqd: 0
+			options: "User"
 		},
 		{
 			fieldname: "from_date",
