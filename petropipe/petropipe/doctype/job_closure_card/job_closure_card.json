@@ -1,0 +1,174 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-02-11 11:19:19.883218",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_xb2j",
+  "amended_from",
+  "naming_series",
+  "petropipe_entity_name",
+  "column_break_vzfs",
+  "date",
+  "section_break_fiwx",
+  "client_name",
+  "job_reference_no",
+  "incoterm",
+  "currency",
+  "column_break_tzvf",
+  "job_completion_date",
+  "remarks",
+  "forwarder_details_section",
+  "forwarder",
+  "transporter_details_section",
+  "transporter",
+  "production__processing_details_section",
+  "production__processing_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_xb2j",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Job Closure Card",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Naming Series",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_vzfs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "petropipe_entity_name",
+   "fieldtype": "Link",
+   "label": "Petropipe Entity Name",
+   "options": "Company"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "section_break_fiwx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "client_name",
+   "fieldtype": "Link",
+   "label": "Client Name",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "job_reference_no",
+   "fieldtype": "Link",
+   "label": "Job Reference No",
+   "options": "Job Card Master"
+  },
+  {
+   "fetch_from": "job_reference_no.incoterm",
+   "fieldname": "incoterm",
+   "fieldtype": "Link",
+   "label": "Incoterm",
+   "options": "Incoterm",
+   "read_only": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "column_break_tzvf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "job_completion_date",
+   "fieldtype": "Date",
+   "label": "Job Completion Date"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "forwarder_details_section",
+   "fieldtype": "Section Break",
+   "label": "Forwarder Details"
+  },
+  {
+   "fieldname": "forwarder",
+   "fieldtype": "Table",
+   "label": "Forwarder",
+   "options": "Forwarder Details"
+  },
+  {
+   "fieldname": "transporter_details_section",
+   "fieldtype": "Section Break",
+   "label": "Transporter Details"
+  },
+  {
+   "fieldname": "transporter",
+   "fieldtype": "Table",
+   "label": "Transporter",
+   "options": "Transporter Details"
+  },
+  {
+   "fieldname": "production__processing_details_section",
+   "fieldtype": "Section Break",
+   "label": "Production / Processing Details"
+  },
+  {
+   "fieldname": "production__processing_details",
+   "fieldtype": "Table",
+   "label": "Production / Processing Details",
+   "options": "Production-Processing Details"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-02-11 16:34:54.511518",
+ "modified_by": "Administrator",
+ "module": "Petropipe",
+ "name": "Job Closure Card",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
