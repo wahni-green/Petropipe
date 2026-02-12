@@ -1,0 +1,110 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-02-11 12:31:58.304759",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "process_type",
+  "description_of_work",
+  "vendor_factory_name",
+  "location",
+  "qty",
+  "completion_date",
+  "column_break_dpts",
+  "cost",
+  "no_of_lots",
+  "currency",
+  "invoice_number",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "column_break_dpts",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cost",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Cost"
+  },
+  {
+   "fieldname": "no_of_lots",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "No of Lots"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "invoice_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Invoice Number"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "process_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Process Type",
+   "options": "Process details"
+  },
+  {
+   "fieldname": "description_of_work",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Description  of Work"
+  },
+  {
+   "fieldname": "vendor_factory_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Vendor/Factory  Name"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Location"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "completion_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Completion  Date"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-02-11 16:19:14.175838",
+ "modified_by": "Administrator",
+ "module": "Petropipe",
+ "name": "Production-Processing Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
