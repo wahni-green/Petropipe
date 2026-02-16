@@ -97,6 +97,9 @@ app_license = "\'MIT\'"
 # override_doctype_class = {
 #	"ToDo": "custom_app.overrides.CustomToDo"
 # }
+override_doctype_class = {
+    "Gratuity": "petropipe.petropipe.overrides.gratuity.CustomGratuity",
+}
 
 # Document Events
 # ---------------
@@ -109,6 +112,11 @@ app_license = "\'MIT\'"
 #		"on_trash": "method"
 #	}
 # }
+doc_events = {
+	"Sales Order": {
+		"on_submit": ["petropipe.crud_events.job_card_master.auto_job_card"],
+	},
+}
 
 # Scheduled Tasks
 # ---------------
