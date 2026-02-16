@@ -6,12 +6,15 @@ def auto_job_card(doc, method=None):
     
     job_card_name = frappe.db.get_value("Job Card Master", {"job_no": doc.job_no}, "name")
     if job_card_name:
-        frappe.db.set_value("Job Card Master", job_card_name, {
-            "customer": doc.customer or '',
-            "incoterm": doc.incoterm or '',
-            "sales_order": doc.name or '',
-            "company": doc.company or ''
-        }, update_modified=True)
+        try:
+            frappe.db.set_value("Job Card Master", job_card_name, {
+                "customer": doc.customer or '',
+                "incoterm": doc.incoterm or '',
+                "sales_order": doc.name or '',
+                "company": doc.company or ''
+            }, update_modified=True)
+        except Exception:
+            frappe.log_error(frappe.get_traceback(), "Job Card Master Update Failed")
     else:
         try:
             job_card_master = frappe.new_doc("Job Card Master")
