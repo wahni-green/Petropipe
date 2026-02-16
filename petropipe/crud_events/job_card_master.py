@@ -23,3 +23,4 @@ def auto_job_card(doc, method=None):
             job_card_master.insert(ignore_permissions=True)
         except Exception:
             frappe.log_error(frappe.get_traceback(), "Job Card Master Creation Failed")
+            
