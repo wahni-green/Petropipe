@@ -97,6 +97,9 @@ app_license = "\'MIT\'"
 # override_doctype_class = {
 #	"ToDo": "custom_app.overrides.CustomToDo"
 # }
+override_doctype_class = {
+    "Gratuity": "petropipe.petropipe.overrides.gratuity.CustomGratuity",
+}
 
 # Document Events
 # ---------------
