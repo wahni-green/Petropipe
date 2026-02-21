@@ -6,6 +6,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "forwarder",
   "forwarder_name",
   "mode_of_transport",
   "origin",
@@ -23,9 +24,10 @@
   {
    "fieldname": "forwarder_name",
    "fieldtype": "Link",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Forwarder Name",
-   "options": "Supplier"
+   "options": "Forwarder"
   },
   {
    "fieldname": "mode_of_transport",
@@ -92,13 +94,19 @@
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "Remarks"
+  },
+  {
+   "fieldname": "forwarder",
+   "fieldtype": "Link",
+   "label": "Forwarder",
+   "options": "Supplier"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-02-21 17:01:08.866948",
+ "modified": "2026-02-21 17:13:03.409995",
  "modified_by": "Administrator",
  "module": "Petropipe",
  "name": "Forwarder Details",

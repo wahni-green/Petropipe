@@ -6,6 +6,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "transporter",
   "transporter_name",
   "type_transport",
   "pickup_location",
@@ -64,9 +65,10 @@
   {
    "fieldname": "transporter_name",
    "fieldtype": "Link",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Transporter Name",
-   "options": "Supplier"
+   "options": "Transporter"
   },
   {
    "fieldname": "pickup_location",
@@ -92,13 +94,19 @@
    "in_list_view": 1,
    "label": "Transport  Type",
    "options": "\nAir\nSea"
+  },
+  {
+   "fieldname": "transporter",
+   "fieldtype": "Link",
+   "label": "Transporter",
+   "options": "Supplier"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-02-21 17:01:35.313114",
+ "modified": "2026-02-21 17:12:17.324919",
  "modified_by": "Administrator",
  "module": "Petropipe",
  "name": "Transporter Details",

@@ -8,6 +8,7 @@
  "field_order": [
   "process_type",
   "description_of_work",
+  "vendor",
   "vendor_factory_name",
   "location",
   "qty",
@@ -71,6 +72,7 @@
   {
    "fieldname": "vendor_factory_name",
    "fieldtype": "Data",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Vendor/Factory  Name"
   },
@@ -91,13 +93,19 @@
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Completion  Date"
+  },
+  {
+   "fieldname": "vendor",
+   "fieldtype": "Link",
+   "label": "Vendor",
+   "options": "Supplier"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-02-11 16:19:14.175838",
+ "modified": "2026-02-21 17:13:42.640576",
  "modified_by": "Administrator",
  "module": "Petropipe",
  "name": "Production-Processing Details",
