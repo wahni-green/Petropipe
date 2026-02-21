@@ -66,7 +66,6 @@
    "fieldname": "transporter_name",
    "fieldtype": "Link",
    "hidden": 1,
-   "in_list_view": 1,
    "label": "Transporter Name",
    "options": "Transporter"
   },
@@ -98,6 +97,7 @@
   {
    "fieldname": "transporter",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Transporter",
    "options": "Supplier"
   }
@@ -106,7 +106,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-02-21 17:12:17.324919",
+ "modified": "2026-02-21 17:24:33.173173",
  "modified_by": "Administrator",
  "module": "Petropipe",
  "name": "Transporter Details",
