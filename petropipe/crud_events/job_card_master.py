@@ -12,7 +12,8 @@ def auto_job_card(doc, method=None):
                 "customer": doc.customer or '',
                 "incoterm": doc.incoterm or '',
                 "sales_order": doc.name or '',
-                "company": doc.company or ''
+                "company": doc.company or '',
+                "grand_total": doc.grand_total or '',
             }, update_modified=True)
         except Exception:
             frappe.log_error(frappe.get_traceback(), "Job Card Master Update Failed")
@@ -24,6 +25,7 @@ def auto_job_card(doc, method=None):
             job_card_master.customer = doc.customer or ""
             job_card_master.incoterm = doc.incoterm or ""
             job_card_master.company = doc.company or ""
+            job_card_master.grand_total = doc.grand_total or ""
             job_card_master.insert(ignore_permissions=True)
         except DuplicateEntryError:
             existing_name = frappe.db.get_value( "Job Card Master",{"job_no": doc.job_no},"name")
@@ -32,7 +34,8 @@ def auto_job_card(doc, method=None):
                     "customer": doc.customer or "",
                     "incoterm": doc.incoterm or "",
                     "sales_order": doc.name or "",
-                    "company": doc.company or ""
+                    "company": doc.company or "",
+                    "grand_total": doc.grand_total or ""
                 }, update_modified=True)
 
         except Exception:
