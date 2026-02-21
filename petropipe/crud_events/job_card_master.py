@@ -13,7 +13,7 @@ def auto_job_card(doc, method=None):
                 "incoterm": doc.incoterm or '',
                 "sales_order": doc.name or '',
                 "company": doc.company or '',
-                "grand_total": doc.grand_total or '',
+                "grand_total": doc.grand_total or 0
             }, update_modified=True)
         except Exception:
             frappe.log_error(frappe.get_traceback(), "Job Card Master Update Failed")
@@ -35,7 +35,7 @@ def auto_job_card(doc, method=None):
                     "incoterm": doc.incoterm or "",
                     "sales_order": doc.name or "",
                     "company": doc.company or "",
-                    "grand_total": doc.grand_total or ""
+                    "grand_total": doc.grand_total or 0
                 }, update_modified=True)
 
         except Exception:
