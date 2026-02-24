@@ -11,7 +11,8 @@
   "incoterm",
   "column_break_mzvg",
   "company",
-  "sales_order"
+  "sales_order",
+  "grand_total"
  ],
  "fields": [
   {
@@ -54,12 +55,18 @@
    "label": "Company",
    "options": "Company",
    "read_only": 1
+  },
+  {
+   "fetch_from": "sales_order.grand_total",
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "label": "Grand Total"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-11 10:34:14.352470",
+ "modified": "2026-02-21 16:58:41.107860",
  "modified_by": "Administrator",
  "module": "Petropipe",
  "name": "Job Card Master",
